@@ -245,8 +245,8 @@ class UNet(nn.Module):
         predicted_depth,
         actual_depth,
         mse_coeff = 0.6,
-        edge_coeff = 0.2,
-        ssim_coeff = 1,
+        edge_coeff = 0,
+        ssim_coeff = 0,
     ) -> int:
         MSE_LOSS = F.mse_loss(predicted_depth, actual_depth) # This is the MSE loss
         GRE_LOSS = self.gradient_edge_loss(predicted_depth, actual_depth)

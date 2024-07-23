@@ -1,0 +1,61 @@
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 1/50:   2%|▍                          | 12/691 [00:39<37:10,  3.29s/it]
+Traceback (most recent call last):
+  File "/home/patrick/Documents/ML/Depth-Prediction/train.py", line 109, in <module>
+    reconstructed = model(color_images)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 133, in forward
+    a = self.decode(z)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 125, in decode
+    a =  self.fl(a)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 952, in forward
+    return F.conv_transpose2d(
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/patrick/Documents/ML/Depth-Prediction/train.py", line 109, in <module>
+    reconstructed = model(color_images)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 133, in forward
+    a = self.decode(z)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 125, in decode
+    a =  self.fl(a)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 952, in forward
+    return F.conv_transpose2d(
+KeyboardInterrupt

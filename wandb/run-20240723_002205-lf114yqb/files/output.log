@@ -1,0 +1,158 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 1/50: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 14/14 [00:50<00:00,  3.64s/it]
+Epoch 1/50, Train Loss: 1.180313561643873
+Epoch 1/50, Test Loss: 1.235900150405036
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 2/50: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 14/14 [00:48<00:00,  3.47s/it]
+Epoch 2/50, Train Loss: 1.046782714979989
+Epoch 3/50:   0%|                                                                                                                                                                                        | 0/14 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 3/50: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 14/14 [00:49<00:00,  3.50s/it]
+Epoch 3/50, Train Loss: 1.0329055104936873
+Epoch 4/50:   0%|                                                                                                                                                                                        | 0/14 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 4/50: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 14/14 [00:48<00:00,  3.48s/it]
+Epoch 4/50, Train Loss: 1.0295698131833757
+Epoch 5/50:   0%|                                                                                                                                                                                        | 0/14 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 5/50: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 14/14 [00:52<00:00,  3.75s/it]
+Epoch 5/50, Train Loss: 1.0286723034722465
+Epoch 6/50:   0%|                                                                                                                                                                                        | 0/14 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 6/50: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 14/14 [00:50<00:00,  3.59s/it]
+Epoch 6/50, Train Loss: 1.0270985450063432
+Epoch 7/50:   0%|                                                                                                                                                                                        | 0/14 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+Epoch 7/50:  57%|████████████████████████████████████████████████████████████████████████████████████████████████████▌                                                                           | 8/14 [00:33<00:25,  4.19s/it]
+Traceback (most recent call last):
+  File "/home/patrick/Documents/ML/Depth-Prediction/train.py", line 109, in <module>
+    reconstructed = model(color_images)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 133, in forward
+    a = self.decode(z)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 125, in decode
+    a =  self.fl(a)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 460, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 456, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/patrick/Documents/ML/Depth-Prediction/train.py", line 109, in <module>
+    reconstructed = model(color_images)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 133, in forward
+    a = self.decode(z)
+  File "/home/patrick/Documents/ML/Depth-Prediction/smaller_model.py", line 125, in decode
+    a =  self.fl(a)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 460, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/patrick/.local/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 456, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+KeyboardInterrupt
