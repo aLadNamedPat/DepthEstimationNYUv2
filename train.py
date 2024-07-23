@@ -79,21 +79,21 @@ train_size = int(0.8 * len(dataset))
 test_size = len(dataset) - train_size
 train_dataset, valid_dataset = random_split(dataset, [train_size, test_size])
 
-train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+train_dataloader = DataLoader(train_dataset, batch_size=128, shuffle=True)
 valid_dataloader = DataLoader(valid_dataset, batch_size=12, shuffle=False)
 
 input_channels = 3
 
 out_channels = 1
 
-hidden_dims = [256, 256, 512, 1024, 1024]
+hidden_dims = [64, 128, 256, 512, 512]
 model = UNET(input_channels, out_channels, hidden_dims).to(device)
 
 # Define optimizer
-optimizer = torch.optim.Adam(model.parameters(), lr=5e-3)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 
 # Training loop
-epochs = 50
+epochs = 250
 
 for epoch in range(epochs):
     model.train()

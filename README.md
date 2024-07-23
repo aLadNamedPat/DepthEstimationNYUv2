@@ -2,6 +2,8 @@
 
 Implementation of the encoder-decoder architecture for estimating depth on the NYU 2v dataset.
 
+The dataset I used can be found here:
+[link](https://www.kaggle.com/datasets/soumikrakshit/nyu-depth-v2)
 ## Loss functions used
 Using three different loss functions when training because MAE (Mean absolute loss) isn't sufficient for predicting the depth of images as smaller disreprencies in depth can 
 lead to behavior that doesn't make sense.
@@ -21,3 +23,14 @@ Three types of losses:
 ## Model Implemented
 
 I intend to use a UNet with flash attention with 10M~ parameters.
+
+Flash attention is not yet implemented because of memory issues with current model. Images are resized to 128 by 96 for the same reason. I intend to use gradient accumulation to free up memory. 
+
+## Preliminary Results
+These are results obtained training only on around 5% of the original dataset (the dataset is too large for my computer to process).
+
+Pictures are the original image, the actual depth, and the predicted depth
+
+![Original Image](Results/Original_Image.png)
+![Original Depth](Results/Depth_Original.png)
+![Predicted Depth](Results/Depth_Reconstruction.png)
