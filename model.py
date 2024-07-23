@@ -207,16 +207,17 @@ class UNet(nn.Module):
         total_loss = torch.sum(torch.flatten(gx_loss + gy_loss)) / total_nums
         return total_loss
 
+    # https://en.wikipedia.org/wiki/Structural_similarity_index_measure
     def SSIM_loss(
         self,
         predicted_depth,
         actual_depth,
         K1 = 0.001,
         K2 = 0.003,
+        scale = 1,
     ):
-        
-        C1 = (255 * K1) ** 2
-        C2 = (255 * K2) ** 2
+        C1 = K1 ** 2
+        C2 = K2 ** 2
 
         total_lens = torch.flatten(predicted_depth).shape[0]
         predicted_mean = torch.sum(torch.flatten(predicted_depth)) / total_lens
@@ -225,16 +226,16 @@ class UNet(nn.Module):
         predicted_mean = torch.sum(torch.flatten(predicted_depth)) / total_lens
         actual_mean = torch.sum(torch.flatten(actual_depth)) / total_lens
 
-        std_predicted_sq = torch.sqrt(torch.sum(torch.flatten((predicted_depth - predicted_mean) ** 2)) / (total_lens - 1))
-        std_actual_sq = torch.sqrt(torch.sum(torch.flatten(actual_depth - actual_mean ** 2)) / (total_lens - 1))
+        var_predicted = (torch.sum(torch.flatten((predicted_depth - predicted_mean) ** 2)) / (total_lens - 1))
+        var_actual = (torch.sum(torch.flatten(actual_depth - actual_mean ** 2)) / (total_lens - 1))
         covariance = torch.mul((actual_depth - actual_mean), (predicted_depth - predicted_mean)) / (total_lens - 1)
         
         # No contrastive loss used here
 
-        luminance_loss = (predicted_mean * actual_mean * 2 + C1) / (predicted_mean ** 2 + actual_mean ** 2 + C1)
-        structural_loss = (2 * covariance + C2) / (std_predicted_sq + std_actual_sq + C2)
-
-        loss = luminance_loss * structural_loss
+        luminance_loss = (2 * predicted_mean * actual_mean + C1) / (predicted_mean ** 2 + actual_mean ** 2 + C1)
+        structural_loss = (2 * covariance + C2) / (var_predicted + var_actual + C2)
+        # Since loss is between [-1, 1], and we want worse results to be more positive, then subtract from 1 and multiply by scale factor
+        loss = (1 - luminance_loss * structural_loss) * scale
 
         return loss
     
@@ -252,4 +253,5 @@ class UNet(nn.Module):
         SSIM_LOSS = self.SSIM_loss(predicted_depth, actual_depth)
 
         loss = MSE_LOSS * mse_coeff + GRE_LOSS * edge_coeff + ssim_coeff * SSIM_LOSS
+
         return loss
