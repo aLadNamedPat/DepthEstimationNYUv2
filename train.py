@@ -79,14 +79,14 @@ train_size = int(0.8 * len(dataset))
 test_size = len(dataset) - train_size
 train_dataset, valid_dataset = random_split(dataset, [train_size, test_size])
 
-train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 valid_dataloader = DataLoader(valid_dataset, batch_size=12, shuffle=False)
 
 input_channels = 3
 
 out_channels = 1
 
-hidden_dims = [128, 128, 256, 512, 512]
+hidden_dims = [256, 256, 512, 1024, 1024]
 model = UNET(input_channels, out_channels, hidden_dims).to(device)
 
 # Define optimizer
@@ -134,10 +134,13 @@ for epoch in range(epochs):
     wandb.log({"Test Loss": valid_loss_avg})
     print(f'Epoch {epoch+1}/{epochs}, Test Loss: {test_loss/len(valid_dataloader)}')
 
-    wandb.log({"Original_Image" : [wandb.Image(color_images[0], caption=f"Original Image")]})
-    wandb.log({"Depth Image" : [wandb.Image(depth_images[0], caption=f"Original Image")]})
-    wandb.log({"Depth Image Reconstructed": [wandb.Image(reconstructed[0], caption=f"Image Depth")]})
-
+    for color_images, depth_images in valid_dataloader:
+        color_images = color_images.to(device)
+        depth_images = depth_images.to(device)
+        reconstructed = model(color_images)
+        wandb.log({"Original_Image" : [wandb.Image(color_images[0], caption=f"Original Image")]})
+        wandb.log({"Depth Image" : [wandb.Image(depth_images[0], caption=f"Original Image")]})
+        wandb.log({"Depth Image Reconstructed": [wandb.Image(reconstructed[0], caption=f"Image Depth")]})
 
 # Save the model
 model_path = os.path.join(project_dir, 'Depth_Model.pth')

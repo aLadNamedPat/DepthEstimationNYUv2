@@ -185,14 +185,14 @@ class UNet(nn.Module):
         # So we need to find the difference between the changes in x and take the absolute value of that
         # Image is seen as batch_size, image_channels, x, y
 
-        gx = torch.abs(img[:, :, 1:, :] - img[:, :, :-1, :])
+        gx = img[:, :, 1:, :] - img[:, :, :-1, :]
         return gx
 
     def gradient_y(
         self,
         img
     ):
-        gy = torch.abs(img[:, :, :, 1:] - img[:, :, :, :-1])
+        gy = img[:, :, :, 1:] - img[:, :, :, :-1]
         return gy
     # Need to calculate the difference between the edge changes in the x and y direction
     def gradient_edge_loss(

@@ -140,15 +140,16 @@ class UNET(nn.Module):
         # So we need to find the difference between the changes in x and take the absolute value of that
         # Image is seen as batch_size, image_channels, x, y
 
-        gx = torch.abs(img[:, :, 1:, :] - img[:, :, :-1, :])
+        gx = img[:, :, 1:, :] - img[:, :, :-1, :]
         return gx
 
     def gradient_y(
         self,
         img
     ):
-        gy = torch.abs(img[:, :, :, 1:] - img[:, :, :, :-1])
+        gy = img[:, :, :, 1:] - img[:, :, :, :-1]
         return gy
+    
     # Need to calculate the difference between the edge changes in the x and y direction
     def gradient_edge_loss(
         self,
@@ -180,11 +181,8 @@ class UNET(nn.Module):
         predicted_mean = torch.sum(torch.flatten(predicted_depth)) / total_lens
         actual_mean = torch.sum(torch.flatten(actual_depth)) / total_lens
 
-        predicted_mean = torch.sum(torch.flatten(predicted_depth)) / total_lens
-        actual_mean = torch.sum(torch.flatten(actual_depth)) / total_lens
-
         var_predicted = (torch.sum(torch.flatten((predicted_depth - predicted_mean) ** 2)) / (total_lens - 1))
-        var_actual = (torch.sum(torch.flatten(actual_depth - actual_mean ** 2)) / (total_lens - 1))
+        var_actual = (torch.sum(torch.flatten((actual_depth - actual_mean)  ** 2)) / (total_lens - 1))
         covariance = torch.sum(torch.flatten((actual_depth - actual_mean) * (predicted_depth - predicted_mean))) / (total_lens - 1)
         
         # No contrastive loss used here
@@ -195,23 +193,23 @@ class UNET(nn.Module):
         loss = (1 - luminance_loss * structural_loss) * scale
 
         return loss
-    
+
     #Compute the loss of the diffusion model
     def find_loss(
         self,   
         predicted_depth,
         actual_depth,
-        mse_coeff = 0.6,
-        edge_coeff = 0,
-        ssim_coeff = 0,
+        mae_coeff = 0.6,
+        edge_coeff = 0.1,
+        ssim_coeff = 1.0
     ) -> int:
         
-        MSE_LOSS = F.mse_loss(predicted_depth, actual_depth) # This is the MSE loss
+        MAE_LOSS = nn.L1Loss()(predicted_depth, actual_depth) # This is the MSE loss
         GRE_LOSS = self.gradient_edge_loss(predicted_depth, actual_depth)
         SSIM_LOSS = self.SSIM_loss(predicted_depth, actual_depth)
 
         # print("MSE", MSE_LOSS)
         # print("GRE", GRE_LOSS)
-        loss = MSE_LOSS * mse_coeff + GRE_LOSS * edge_coeff + ssim_coeff * SSIM_LOSS
+        loss = MAE_LOSS * mae_coeff + GRE_LOSS * edge_coeff + ssim_coeff * SSIM_LOSS
 
         return loss
