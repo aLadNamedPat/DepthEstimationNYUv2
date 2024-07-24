@@ -1,4 +1,4 @@
-# Depth Estimation Using U-Net (Work in Progress)
+# Depth Estimation Using U-Net
 
 Implementation of the encoder-decoder architecture for estimating depth on the NYU 2v dataset.
 
@@ -26,11 +26,23 @@ I intend to use a UNet with flash attention with 10M~ parameters.
 
 Flash attention is not yet implemented because of memory issues with current model. Images are resized to 128 by 96 for the same reason. I intend to use gradient accumulation to free up memory. 
 
-## Preliminary Results
+## Results
 These are results obtained training only on around 5% of the original dataset (the dataset is too large for my computer to process).
 
 Pictures are the original image, the actual depth, and the predicted depth
 
-![Original Image](Results/Original_Image.png)
-![Original Depth](Results/Depth_Original.png)
-![Predicted Depth](Results/Depth_Reconstruction.png)
+The first image is on data that the model was explicitly trained on - What I mean is that since the NYU data is split into folders based on videos of rooms, the training and test data are very similar and reconstructions of depth are good.
+
+![Good Reconstruction](Results/Predicted_Output.png)
+
+This is the accompanying graph visualization of depth
+
+![Depth visualized](Results/Depth_Reconstruction.png)
+
+And the following is on unseen data i.e. videos from rooms that the model has never seen in training. Note that these rooms look very different with different colored floors and towels.
+
+![Bad Reconstruction](Results/Depth_Reconstruction_Unseen.png)
+
+And this is the accompanying graph visualization
+
+![Bad Reconstruction Graph](Results/Depth_Reconstruction_Unseen_Graph.png)

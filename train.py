@@ -90,7 +90,7 @@ hidden_dims = [64, 128, 256, 512, 512]
 model = UNET(input_channels, out_channels, hidden_dims).to(device)
 
 # Define optimizer
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+optimizer = torch.optim.Adam(model.parameters(), lr=2e-3)
 
 # Training loop
 epochs = 250
@@ -98,22 +98,24 @@ epochs = 250
 for epoch in range(epochs):
     model.train()
     train_loss = 0
-
+    mini_batch = 0
     for color_images, depth_images in tqdm(train_dataloader, desc=f"Epoch {epoch+1}/{epochs}"):
+        mini_batch += 1
         color_images = color_images.to(device)
         depth_images = depth_images.to(device)
 
-        optimizer.zero_grad()
-        
         # Forward pass
         reconstructed = model(color_images)
-        
+
+        optimizer.zero_grad()
+
         # Compute loss
         loss = model.find_loss(reconstructed, depth_images)
         
         # Backward pass and optimization
         loss.backward()
         optimizer.step()
+
         train_loss += loss.item()
     train_loss_avg = train_loss / len(train_dataloader)
     wandb.log({"Train Loss": train_loss_avg})
@@ -138,10 +140,14 @@ for epoch in range(epochs):
         color_images = color_images.to(device)
         depth_images = depth_images.to(device)
         reconstructed = model(color_images)
-        wandb.log({"Original_Image" : [wandb.Image(color_images[0], caption=f"Original Image")]})
-        wandb.log({"Depth Image" : [wandb.Image(depth_images[0], caption=f"Original Image")]})
-        wandb.log({"Depth Image Reconstructed": [wandb.Image(reconstructed[0], caption=f"Image Depth")]})
 
+    wandb.log({"Original_Image" : [wandb.Image(color_images[0], caption=f"Original Image")]})
+    wandb.log({"Depth Image" : [wandb.Image(depth_images[0], caption=f"Original Image")]})
+    wandb.log({"Depth Image Reconstructed": [wandb.Image(reconstructed[0], caption=f"Image Depth")]})
+
+    model_path = os.path.join(project_dir, 'H.pth')
+    torch.save(model.state_dict(), model_path)
+    print(f'Model saved to {model_path}')
 # Save the model
 model_path = os.path.join(project_dir, 'Depth_Model.pth')
 torch.save(model.state_dict(), model_path)
