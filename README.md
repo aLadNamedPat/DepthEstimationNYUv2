@@ -37,7 +37,7 @@ The first image is on data that the model was explicitly trained on - What I mea
 
 This is the accompanying graph visualization of depth
 
-![Depth visualized](Results/Depth_Reconstruction.png)
+![Depth visualized](Results/3D_Plot.png)
 
 And the following is on unseen data i.e. videos from rooms that the model has never seen in training. Note that these rooms look very different with different colored floors and towels.
 
